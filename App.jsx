@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
+//import Camera from 'react-native-vision-camera';
 import * as Location from 'expo-location';
 import MainStack from './navigate';
 
@@ -10,7 +11,7 @@ const App = () => {
   const [permissionGranted, setPermissionGranted] = useState(false);
 
   useEffect(() => {
-    const getLocationPermission = async () => {
+    const requestPermissions = async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         console.log('Permission to access location was denied');
@@ -18,23 +19,17 @@ const App = () => {
       } else {
         setPermissionGranted(true);
       }
-    };
+      
+      //const cameraPermission = await Camera.requestCameraPermissionsAsync();
+      //const audioPermission = await Camera.requestMicrophonePermissionsAsync();
 
-    getLocationPermission();
-  }, []); // Run only once on component mount
-
-
-  useEffect(() => {
-    const requestPermissions = async () => {
-      const cameraPermission = await Camera.requestCameraPermissionsAsync();
-      const audioPermission = await Camera.requestMicrophonePermissionsAsync();
-
-      setCameraPermission(cameraPermission.status === "granted");
-      setAudioPermission(audioPermission.status === "granted");
+      //setCameraPermission(cameraPermission.status === "granted");
     };
 
     requestPermissions();
-  }, []);
+  }, []); // Run only once on component mount
+
+
 
   
 
